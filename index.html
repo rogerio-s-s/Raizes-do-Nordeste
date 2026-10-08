@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Raízes do Nordeste</title>
+    <meta
+      name="description"
+      content="Protótipo de front-end para rede de restaurantes Raízes do Nordeste."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container nav-wrap">
+        <div class="brand" data-screen="home">
+          <div class="brand-mark"><img src="fotos/logo.png" alt=""></div>
+          <span>Raízes do Nordeste</span>
+        </div>
+
+        <nav class="nav desktop-nav" aria-label="Menu principal">
+          <button class="nav-link active" data-screen="home">Início</button>
+          <button class="nav-link" data-screen="menu">Cardápio</button>
+          <button class="nav-link" data-screen="units">Unidades</button>
+          <button class="nav-link" data-screen="promotions">Promoções</button>
+          <button class="nav-link" data-screen="loyalty">Fidelidade</button>
+          <button class="nav-link" data-screen="orders">Meus Pedidos</button>
+          <button class="nav-link" data-screen="account">Minha Conta</button>
+        </nav>
+
+        <button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">
+          ☰ Menu
+        </button>
+      </div>
+
+      <div class="mobile-menu" aria-label="Menu mobile">
+        <button class="nav-link" data-screen="home">Início</button>
+        <button class="nav-link" data-screen="menu">Cardápio</button>
+        <button class="nav-link" data-screen="units">Unidades</button>
+        <button class="nav-link" data-screen="promotions">Promoções</button>
+        <button class="nav-link" data-screen="loyalty">Fidelidade</button>
+        <button class="nav-link" data-screen="orders">Meus Pedidos</button>
+        <button class="nav-link" data-screen="account">Minha Conta</button>
+      </div>
+    </header>
+
+    <main class="container main-content">
+      <section id="screen-home" class="screen active">
+        <div class="hero">
+          <div class="hero-copy">
+            <span class="eyebrow">Culinária nordestina em cada mordida</span>
+            <h1>Raízes do Nordeste</h1>
+            <p>
+              Tapiocas, cuscuz recheado, bolos, sucos regionais e cafés da manhã para
+              começar o dia com sabor de casa.
+            </p>
+            <div class="hero-actions">
+              <button class="primary-btn" data-screen="menu">Fazer Pedido</button>
+              <button class="secondary-btn" data-screen="units">Escolher Unidade</button>
+            </div>
+          </div>
+          <div class="hero-visual">
+            <div class="dish-card large">
+              <img
+                src="fotos/foto inicio .jpeg"
+                alt="Mesa com comida nordestina"
+              />
+            </div>
+            <div class="floating-tag">Café da manhã • 100% artesanal</div>
+          </div>
+        </div>
+
+        <div class="cta-strip">
+          <button class="primary-btn" data-screen="menu">Ver Cardápio</button>
+          <button class="secondary-btn" data-screen="tracking">Acompanhar Pedido</button>
+        </div>
+
+        <div class="find-unit">
+          <div>
+            <p class="section-label">Encontre uma unidade</p>
+            <h2><span data-unit-label>Londrina – PR</span></h2>
+          </div>
+          <button class="primary-btn" data-screen="units">Escolher esta unidade</button>
+        </div>
+      </section>
+
+      <section id="screen-units" class="screen">
+        <div class="screen-header">
+          <p class="section-label">Unidades</p>
+          <h1>Escolha sua unidade</h1>
+        </div>
+        <div class="unit-grid" id="unitGrid"></div>
+      </section>
+
+      <section id="screen-menu" class="screen">
+        <div class="menu-top">
+          <div>
+            <p class="section-label">Cardápio</p>
+            <h1 data-menu-title>Cardápio – Raízes do Nordeste Londrina</h1>
+          </div>
+          <button class="cart-pill" data-screen="cart">
+            Carrinho <span id="cartCount">0</span>
+          </button>
+        </div>
+
+        <div class="search-row">
+          <label class="search-box" aria-label="Pesquisar produto">
+            <span>🔎</span>
+            <input id="searchInput" type="search" placeholder="Pesquisar produto..." />
+          </label>
+        </div>
+
+        <div class="filter-row" id="categoryFilters"></div>
+        <div class="product-grid" id="productGrid"></div>
+      </section>
+
+      <section id="screen-cart" class="screen">
+        <div class="screen-header">
+          <p class="section-label">Pedido</p>
+          <h1>Resumo da compra</h1>
+        </div>
+
+        <div class="cart-layout">
+          <div class="cart-panel">
+            <div class="unit-badge">Unidade: <span data-unit-label>Raízes do Nordeste – Londrina/PR</span></div>
+            <div id="cartItems" class="cart-items"></div>
+          </div>
+
+          <aside class="summary-panel">
+            <h3>Resumo</h3>
+            <div class="summary-row"><span>Subtotal</span><strong id="subtotalValue">R$ 0,00</strong></div>
+            <div class="summary-row"><span>Taxa</span><strong id="taxValue">R$ 0,00</strong></div>
+            <div class="summary-row total"><span>Total</span><strong id="totalValue">R$ 0,00</strong></div>
+            <div class="summary-actions">
+              <button class="secondary-btn" data-screen="menu">Continuar comprando</button>
+              <button class="primary-btn" data-screen="pickup">Finalizar pedido</button>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="screen-pickup" class="screen">
+        <div class="screen-header">
+          <p class="section-label">Retirada</p>
+          <h1>Como deseja receber seu pedido?</h1>
+        </div>
+
+        <div class="choice-boxes">
+          <label class="choice-box">
+            <input type="radio" name="deliveryType" value="retirada" checked />
+            <span>
+              <strong>Retirada na unidade</strong>
+              <small data-unit-location>Raízes do Nordeste – Londrina/PR</small>
+            </span>
+          </label>
+
+          <label class="choice-box">
+            <input type="radio" name="deliveryType" value="entregar" />
+            <span>
+              <strong>Entregar</strong>
+              <small>Entrega em domicílio</small>
+            </span>
+          </label>
+        </div>
+
+        <div class="info-box">
+          <h3>Entrega</h3>
+          <p data-unit-location>Raízes do Nordeste – Londrina/PR</p>
+        </div>
+
+        <div class="screen-actions">
+          <button class="secondary-btn" data-screen="cart">Voltar</button>
+          <button class="primary-btn" data-screen="payment">Continuar</button>
+        </div>
+      </section>
+
+      <section id="screen-payment" class="screen">
+        <div class="screen-header">
+          <p class="section-label">Pagamento</p>
+          <h1>Forma de pagamento</h1>
+        </div>
+
+        <div class="payment-options">
+          <label class="payment-option">
+            <input type="radio" name="paymentMethod" value="pix" checked />
+            <span>Pix</span>
+          </label>
+          <label class="payment-option">
+            <input type="radio" name="paymentMethod" value="cartao" />
+            <span>Cartão</span>
+          </label>
+          <label class="payment-option">
+            <input type="radio" name="paymentMethod" value="dinheiro" />
+            <span>Dinheiro</span>
+          </label>
+         
+        </div>
+
+        <div id="cashField" class="field hidden">
+          <label for="changeInput">Troco para quanto?</label>
+          <input id="changeInput" type="text" placeholder="Ex.: R$ 50,00" />
+        </div>
+
+        <div class="screen-actions">
+          <button class="secondary-btn" data-screen="pickup">Voltar</button>
+          <button class="primary-btn" data-screen="confirmation">Continuar</button>
+        </div>
+      </section>
+
+      <section id="screen-confirmation" class="screen">
+        <div class="screen-header">
+          <p class="section-label">Confirmação</p>
+          <h1>Confirme seu pedido</h1>
+        </div>
+
+        <div class="confirm-card">
+          <div class="confirm-row"><span>Unidade</span><strong data-confirm-unit>Londrina – PR</strong></div>
+          <div class="confirm-row"><span>Produtos</span><strong>Produto 1, Produto 2, Produto 3</strong></div>
+          <div class="confirm-row"><span>Forma de retirada</span><strong>Pick-up</strong></div>
+          <div class="confirm-row"><span>Forma de pagamento</span><strong data-payment-label>Pix</strong></div>
+          <div class="confirm-row total"><span>Valor total</span><strong id="confirmationTotal">R$ 0,00</strong></div>
+        </div>
+
+        <div class="screen-actions">
+          <button class="secondary-btn" data-screen="payment">Voltar</button>
+          <button class="primary-btn" data-screen="success">Confirmar pedido</button>
+        </div>
+      </section>
+
+      <section id="screen-success" class="screen">
+        <div class="success-box">
+          <div class="success-icon">✓</div>
+          <h1>Pedido realizado com sucesso!</h1>
+          <p>Número do pedido: <strong>#000001</strong></p>
+          <button class="primary-btn" data-screen="tracking">Acompanhar pedido</button>
+        </div>
+      </section>
+
+      <section id="screen-tracking" class="screen">
+        <div class="screen-header">
+          <p class="section-label">Acompanhamento</p>
+          <h1>Acompanhe seu pedido</h1>
+        </div>
+
+        <div class="status-track">
+          <div class="status-step done">Pedido recebido</div>
+          <div class="status-step done">Pagamento confirmado</div>
+          <div class="status-step current">Em preparação</div>
+          <div class="status-step">Pronto para retirada</div>
+          <div class="status-step">Pedido retirado</div>
+        </div>
+
+        <div class="tracking-card">
+          <p><strong>STATUS ATUAL:</strong> Em preparação</p>
+          <div class="tracking-grid">
+            <div><span>Número do pedido</span><strong>#000001</strong></div>
+            <div><span>Unidade</span><strong data-tracking-unit>Londrina – PR</strong></div>
+            <div><span>Horário</span><strong>12:45</strong></div>
+            <div><span>Total</span><strong>R$ 49,90</strong></div>
+          </div>
+        </div>
+
+        <div class="screen-actions">
+          <button class="primary-btn" data-screen="home">Voltar para início</button>
+        </div>
+      </section>
+
+      <section id="screen-orders" class="screen">
+        <div class="screen-header">
+          <p class="section-label">Histórico</p>
+          <h1>Meus pedidos</h1>
+        </div>
+        <div class="order-list" id="orderList"></div>
+      </section>
+
+      <section id="screen-loyalty" class="screen">
+        <div class="screen-header">
+          <p class="section-label">Fidelidade</p>
+          <h1>Programa de Fidelidade</h1>
+        </div>
+
+        <div class="loyalty-card">
+          <h2>Maria Oliveira</h2>
+          <p>Você possui <strong>250 pontos</strong></p>
+          <p>Próximo benefício: <strong>Taça de café + 15% off</strong></p>
+        </div>
+
+        <div class="benefits-box">
+          <h3>Benefícios</h3>
+          <div class="screen-actions inline-actions">
+            <button class="secondary-btn">Ver benefícios</button>
+            <button class="secondary-btn">Ver histórico de pontos</button>
+          </div>
+        </div>
+
+        <div class="consent-box">
+          <label class="check-row">
+            <input type="checkbox" />
+            <span>Aceito receber comunicações e promoções</span>
+          </label>
+        </div>
+      </section>
+
+      <section id="screen-promotions" class="screen">
+        <div class="screen-header">
+          <p class="section-label">Ofertas</p>
+          <h1>Promoções</h1>
+        </div>
+        <div class="promo-grid" id="promoGrid"></div>
+      </section>
+
+      <section id="screen-account" class="screen">
+        <div class="screen-header">
+          <p class="section-label">Conta</p>
+          <h1>Minha conta</h1>
+        </div>
+
+        <form class="account-form">
+          <div class="field-group">
+            <label for="nameInput">Nome</label>
+            <input id="nameInput" type="text" value="Maria Oliveira" />
+          </div>
+          <div class="field-group">
+            <label for="emailInput">E-mail</label>
+            <input id="emailInput" type="email" value="maria@email.com" />
+          </div>
+          <div class="field-group">
+            <label for="phoneInput">Telefone</label>
+            <input id="phoneInput" type="tel" value="(43) 99999-0000" />
+          </div>
+          <div class="field-group">
+            <label for="cityInput">Cidade</label>
+            <input id="cityInput" type="text" value="Londrina" />
+          </div>
+          <div class="screen-actions inline-actions">
+            <button type="button" class="secondary-btn">Editar dados</button>
+            <button type="button" class="primary-btn">Salvar alterações</button>
+          </div>
+        </form>
+
+        <div class="privacy-panel">
+          <h3>Privacidade e dados</h3>
+          <div class="screen-actions inline-actions">
+            <button class="secondary-btn" data-screen="privacy">Preferências de privacidade</button>
+            <button class="secondary-btn">Gerenciar consentimentos</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="screen-privacy" class="screen">
+        <div class="screen-header">
+          <p class="section-label">Privacidade</p>
+          <h1>LGPD e privacidade</h1>
+        </div>
+
+        <div class="privacy-list">
+          <div class="info-card">
+            <h3>Uso de dados pessoais</h3>
+            <p>Utilizamos informações para melhorar a experiência de compra, atendimento e entrega.</p>
+          </div>
+          <div class="info-card">
+            <h3>Consentimento</h3>
+            <p>As comunicações e promoções só serão enviadas com sua autorização.</p>
+          </div>
+          <div class="info-card">
+            <h3>Preferências de comunicação</h3>
+            <p>Você pode decidir quais canais deseja receber atualizações.</p>
+          </div>
+          <div class="info-card">
+            <h3>Política de privacidade</h3>
+            <p>Confira as regras de uso, retenção e acesso aos seus dados pessoais.</p>
+          </div>
+        </div>
+
+        <div class="consent-box">
+          <label class="check-row">
+            <input type="checkbox" />
+            <span>Aceito receber comunicações e promoções.</span>
+          </label>
+        </div>
+
+        <div class="screen-actions">
+          <button class="primary-btn">Salvar preferências</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-grid">
+        <div>
+          <h3>Raízes do Nordeste</h3>
+          <ul>
+            <li><button class="footer-link" data-screen="home">Início</button></li>
+            <li><button class="footer-link" data-screen="menu">Cardápio</button></li>
+            <li><button class="footer-link" data-screen="units">Unidades</button></li>
+            <li><button class="footer-link" data-screen="loyalty">Fidelidade</button></li>
+            <li><button class="footer-link" data-screen="privacy">Privacidade</button></li>
+            <li><button class="footer-link" data-screen="home">Contato</button></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Localização</h3>
+          <p data-location>Londrina – Paraná</p>
+        </div>
+        <div>
+          <h3>Redes sociais</h3>
+          <div class="socials">
+             <span><img src="fotos/insta .png" alt="instagram" width="40" height="30"></span>
+            <span><img src="fotos/facebook.png" alt="facebook" width="40" height="30"></span>
+            <span><img src="fotos/tiktok.png" alt="tiktok" width="40" height="30"></span>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <div id="productModal" class="modal hidden" aria-hidden="true">
+      <div class="modal-backdrop" data-close-modal="true"></div>
+      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="productModalTitle">
+        <button class="modal-close" aria-label="Fechar modal">×</button>
+        <div class="modal-image-wrap">
+          <img id="modalImage" src="" alt="Produto" />
+        </div>
+        <div class="modal-content">
+          <h2 id="productModalTitle">Produto</h2>
+          <p id="modalDescription"></p>
+          <p class="ingredients-label">Ingredientes:</p>
+          <p id="modalIngredients"></p>
+          <div class="modal-meta">
+            <span id="modalPrice"></span>
+            <div class="quantity-control modal-qty">
+              <button class="qty-btn" data-action="decrease-modal">−</button>
+              <span id="modalQty">1</span>
+              <button class="qty-btn" data-action="increase-modal">+</button>
+            </div>
+          </div>
+          <label class="field-group textarea-wrap">
+            <span>Alguma observação?</span>
+            <textarea id="modalObservation" rows="3" placeholder="Sem cebola, adicionar ingrediente, observação do pedido"></textarea>
+          </label>
+          <div class="modal-actions">
+            <button class="secondary-btn" data-close-modal="true">Cancelar</button>
+            <button class="primary-btn" id="addToCartModal">Adicionar ao pedido</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast" class="toast" aria-live="polite"></div>
+    <script src="script.js"></script>
+  </body>
+</html>
